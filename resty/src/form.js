@@ -5,7 +5,9 @@ class Main extends React.Component {
     super(props);
     // let params = new URL(document.location).searchParams;
     this.state = {
-      formValues: {},
+      formValues: {
+        output: ''
+      },
     };
   }
 
@@ -14,14 +16,7 @@ class Main extends React.Component {
     this.setState({ link });
   };
 
-  // handleClick = e => {
-  //   e.preventDefault();
-  //   let link = this.state.link
-  //     .split('')
-  //     .reverse()
-  //     .join('');
-  //   this.setState({ link });
-  // };
+
   handleChangeInput = (e) => {
     let fieldName = e.target.name;//Takes label input, whatever typed
     let value = e.target.value;//Takes radio button clicked
@@ -35,13 +30,13 @@ class Main extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({ ...this.state, link: this.state.formValues.link })
+    this.setState({ ...this.state, output: `${this.state.formValues.URL} ${this.state.formValues.link}` })
   }
 
   render() {
     return (
       <>
-        <h2>{this.state.link}</h2>
+        <h2>{this.state.output}</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <input type="text" name="link" onChange={this.handleChangeInput} />
@@ -71,15 +66,6 @@ class Main extends React.Component {
     );
   }
 }
-//   render() {
-//     return (
-//       <div>
-//         <h3>{this.state.link}</h3>
-//         <input onChange={this.handleWord} />
-//         <button onClick={this.handleClick}>Click Me</button>
-//       </div>
-//     );
-//   }
-// }
+
 
 export default Main;
