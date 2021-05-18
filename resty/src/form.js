@@ -1,4 +1,8 @@
+import axios from 'axios';
 import React from 'react';
+import './form.css';
+import ReactJson from 'react-json-view';
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -6,7 +10,11 @@ class Main extends React.Component {
     // let params = new URL(document.location).searchParams;
     this.state = {
       formValues: {
-        output: ''
+        output: '',
+        apiCall: '',
+        link: '',
+        METHOD: '',
+        yourPoke: ''
       },
     };
   }
@@ -23,45 +31,54 @@ class Main extends React.Component {
     console.log(value);
     let formValues = { ...this.state.formValues, [fieldName]: value }
     this.setState({ formValues });
-    console.log(formValues);
 
     // superagent.post('/api/person').send(this.state.formValues)
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ ...this.state, output: `${this.state.formValues.URL} ${this.state.formValues.link}` })
+    await axios.get('https://pokeapi.co/api/v2/pokemon')
+      .then(results => {
+        console.log(results);
+        this.setState({ ...this.state, output: `${this.state.formValues.METHOD} ${this.state.formValues.link}`, yourPoke: results })//use key to traverse
+      })
   }
-
   render() {
     return (
       <>
-        <h2>{this.state.output}</h2>
+
         <form onSubmit={this.handleSubmit}>
           <div>
             <input type="text" name="link" onChange={this.handleChangeInput} />
+            <button>Submit</button>
           </div>
           <div>
             <label>
-              <input onChange={this.handleChangeInput} type="radio" name="URL" value="GET" />
+              <input onChange={this.handleChangeInput} type="radio" name="METHOD" value="GET" />
               <span>GET</span>
             </label>
             <label>
-              <input onChange={this.handleChangeInput} type="radio" name="URL" value="POST" />
+              <input onChange={this.handleChangeInput} type="radio" name="METHOD" value="POST" />
               <span>POST</span>
             </label>
             <label>
-              <input onChange={this.handleChangeInput} type="radio" name="URL" value="PUT" />
+              <input onChange={this.handleChangeInput} type="radio" name="METHOD" value="PUT" />
               <span>PUT</span>
             </label>
             <label>
-              <input onChange={this.handleChangeInput} type="radio" name="URL" value="DELETE" />
+              <input onChange={this.handleChangeInput} type="radio" name="METHOD" value="DELETE" />
               <span>DELETE</span>
             </label>
           </div>
 
-          <button>Submit</button>
+          <div id="output">
+            <ReactJson src={this.state.yourPoke} theme="monokai" />
+          </div>
+
+
         </form>
+
+
       </>
     );
   }
