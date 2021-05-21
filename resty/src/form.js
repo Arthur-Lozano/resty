@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react';
-import './form.css';
+import './form.scss';
 import ReactJson from 'react-json-view';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 
 class Main extends React.Component {
@@ -35,12 +36,26 @@ class Main extends React.Component {
     // superagent.post('/api/person').send(this.state.formValues)
   }
 
+
+  handleSubmitPost = async (e) => {
+    e.preventDefault();
+    await axios.post('https://pokeapi.co/api/v2/pokemon')
+      .then(results => {
+        console.log('yukfjyukfyuky', results);
+        this.setState({ ...this.state, output: `${this.state.formValues.METHOD} ${this.state.formValues.link}`, yourPoke: results })//use key to traverse
+
+      })
+  }
+
   handleSubmit = async (e) => {
     e.preventDefault();
     await axios.get('https://pokeapi.co/api/v2/pokemon')
       .then(results => {
+        // localStorage.setItem('request', results);
+        window.localStorage.setItem("Pokemon", JSON.stringify(results));
         console.log(results);
         this.setState({ ...this.state, output: `${this.state.formValues.METHOD} ${this.state.formValues.link}`, yourPoke: results })//use key to traverse
+
       })
   }
   render() {
