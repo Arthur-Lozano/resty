@@ -1,25 +1,97 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-size: 25px;
+  display: flex;
+  flex-direction: column;
 }
 
-div {
-  margin: 2rem;
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  & > header {
+    background: maroon;
+    color: #f5f5f5;
+
+    nav {
+      background: #111;
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: inline-block;
+          padding: 1em 3em;
+
+          &:hover {
+            background: #ccc;
+          }
+
+          a {
+            text-decoration: none;
+            color: #f5f5f5;
+          }
+        }
+      }
+    }
+  }
+
+  & > main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 2em;
+  }
+
+  & > footer {
+    background: #111;
+    color: ivory;
+  }
 }
 
-label {
-  margin: 1rem;
+.homeWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-input[type='radio'], input[type='checkbox'] {
-  display: none;
+.homeOutput {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }
 
-label span {
-  border: 1px solid red;
-  padding: 1rem;
-  margin: 1px;
+form {
+  margin-bottom: 2em;
 }
 
-input[type="radio"]:checked + span {
-  background: silver;
+aside {
+  width: 400px;
+
+  .history {
+    margin: .15em 0;
+    padding: .5em;
+
+    .method {
+      background: red;
+      border: 1px solid black;
+      border-radius: 5px;
+      color: ivory;
+      display: inline-block;
+      margin: .25em;
+      padding: .5rem;
+      width: 50px;
+    }
+
+    .url {
+      font-size: .5em;
+    }
+  }
 }
